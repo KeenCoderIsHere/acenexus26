@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Clock, MapPin, CheckCircle, Loader2 } from "lucide-react"
 import { Footer } from "./Footer"
 import { useState } from "react"
-import { addDoc, collection } from "firebase/firestore"
+import { addDoc, collection, doc, increment, limit, updateDoc } from "firebase/firestore"
 import { db } from "@/config"
 export const Form = ({ event }) => {
   const [name,setName] = useState('')
@@ -88,6 +88,11 @@ export const Form = ({ event }) => {
   const handleSubmit = async (e) => {
     try{
       e.preventDefault()
+      if(event.limit <= 0){
+        setError("Sorry! The event is now fully booked!")
+        setShowErrorBox(true)
+        return
+      }
       setLoading(true)
       if(!validateCredentials()){
         return
@@ -99,7 +104,11 @@ export const Form = ({ event }) => {
         email,
         department,
         year,
-        submittedAt: new Date()
+        submittedAt: new Date(),
+        eventId: event.id
+      })
+      await updateDoc(doc(db, "events", event.id), {
+        limit: increment(-1)
       })
       setName('')
       setRegisterNumber('')
