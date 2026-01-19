@@ -3,7 +3,7 @@ import Image from "next/image"
 import { Clock, MapPin, CheckCircle, Loader2 } from "lucide-react"
 import { Footer } from "./Footer"
 import { useState } from "react"
-import { addDoc, collection, doc, increment, limit, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, getDoc, getDocs, increment, limit, query, updateDoc, where } from "firebase/firestore"
 import { db } from "@/config"
 export const Form = ({ event }) => {
   const [name,setName] = useState('')
@@ -85,6 +85,19 @@ export const Form = ({ event }) => {
     hour12: true
   })
   }
+  const checkIfAlreadyRegistered = async () => {
+    try{
+      const collectionRef = collection(db, "submissions")
+      const q = query(collectionRef, where("generatedToken", "==", `${event.id}_${registerNumber}`))
+      const querySnapshot = await getDocs(q)
+      return (!querySnapshot.empty)
+    }
+    catch(error){
+      setError(error.message || "An error occured")
+      setShowErrorBox(true)
+      return false
+    }
+  }
   const handleSubmit = async (e) => {
     try{
       e.preventDefault()
@@ -97,6 +110,12 @@ export const Form = ({ event }) => {
       if(!validateCredentials()){
         return
       }
+      const alreadyRegistered = await checkIfAlreadyRegistered()
+      if(alreadyRegistered){
+        setError('You have already registered for this event!')
+        setShowErrorBox(true)
+        return
+      }
       const docRef = await addDoc(collection(db, "submissions"), {
         name,
         registerNumber,
@@ -105,7 +124,9 @@ export const Form = ({ event }) => {
         department,
         year,
         submittedAt: new Date(),
-        eventId: event.id
+        eventId: event.id,
+        eventName: event.name,
+        generatedToken: `${event.id}_${registerNumber}`
       })
       await updateDoc(doc(db, "events", event.id), {
         limit: increment(-1)
@@ -206,7 +227,7 @@ export const Form = ({ event }) => {
             <div className="text-xs text-white mb-4 text-center">{error}</div>
             <button
               onClick={() => setShowErrorBox(false)}
-              className="mx-auto bg-yellow-300 text-black font-bold text-xs py-1 px-4 rounded hover:bg-yellow-400 transition-colors"
+              className="mx-auto bg-yellow-300 cursor-pointer text-black font-bold text-xs py-1 px-4 rounded hover:bg-yellow-400 transition-colors"
             >
               OK
             </button>

@@ -24,7 +24,7 @@ export default async function page({ params }){
   }
   return (
     <>
-  <Form event={event}/>
+      <Form event={event}/>
     </>
   )
 }
