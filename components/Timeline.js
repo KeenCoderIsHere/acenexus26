@@ -1,6 +1,63 @@
+'use client'
 import { Calendar, MapPin, ArrowUpRight } from 'lucide-react'
 
 const Timeline = () => {
+  const addToCalendar= (id) => {
+    if(id === 1){
+      const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=Strategy+Showdown" +
+      "&dates=20260126T090000Z/20260210T100000Z" +
+      "&details=This+is+a+test+event" +
+      "&location=Online"
+      window.open(url, "_blank")
+    }
+    if(id === 2){
+      const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=Strategy+Showdown" +
+      "&dates=20260126T090000Z/20260210T100000Z" +
+      "&details=This+is+a+test+event" +
+      "&location=Online"
+      window.open(url, "_blank")
+    }
+    if(id === 3){
+      const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=Strategy+Showdown" +
+      "&dates=20260126T090000Z/20260210T100000Z" +
+      "&details=This+is+a+test+event" +
+      "&location=Online"
+      window.open(url, "_blank")
+    }
+    if(id === 4){
+      const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=Strategy+Showdown" +
+      "&dates=20260126T090000Z/20260210T100000Z" +
+      "&details=This+is+a+test+event" +
+      "&location=Online"
+      window.open(url, "_blank")
+    }
+    if(id === 5){
+      const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=Strategy+Showdown" +
+      "&dates=20260126T090000Z/20260210T100000Z" +
+      "&details=This+is+a+test+event" +
+      "&location=Online"
+      window.open(url, "_blank")
+    }
+    if(id === 6){
+      const url =
+      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+      "&text=Strategy+Showdown" +
+      "&dates=20260126T090000Z/20260210T100000Z" +
+      "&details=This+is+a+test+event" +
+      "&location=Online"
+      window.open(url, "_blank")
+    }
+  }
   return (
     <>
       <div className="flex flex-col py-5 mt-10 items-center gap-y-6 md:hidden" id='timeline-sm'>
@@ -134,7 +191,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer">
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(1)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -153,7 +210,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer">
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(2)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -172,7 +229,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer">
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(3)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -191,7 +248,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer">
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(4)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -210,7 +267,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer">
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(5)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -229,7 +286,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer">
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(6)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
