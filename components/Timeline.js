@@ -181,7 +181,7 @@ const Timeline = () => {
   <div className="grid grid-cols-2 gap-x-20 gap-y-12">
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">1</div>
-      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full">
+      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full  hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
         <div className="text-xl font-bold mb-2 text-white">Strategy Showdown</div>
         <div className="text-gray-400 text-sm flex flex-row items-center gap-x-3 mt-1">
           <Calendar className="w-4 h-4 text-white"/>
@@ -200,7 +200,7 @@ const Timeline = () => {
 
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">2</div>
-      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full">
+      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
         <div className="text-xl font-bold mb-2 text-white">Strategy Showdown</div>
         <div className="text-gray-400 text-sm flex flex-row items-center gap-x-3 mt-1">
           <Calendar className="w-4 h-4 text-white"/>
@@ -219,7 +219,7 @@ const Timeline = () => {
 
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">3</div>
-      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full">
+      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
         <div className="text-xl font-bold mb-2 text-white">Strategy Showdown</div>
         <div className="text-gray-400 text-sm flex flex-row items-center gap-x-3 mt-1">
           <Calendar className="w-4 h-4 text-white"/>
@@ -238,7 +238,7 @@ const Timeline = () => {
 
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">4</div>
-      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full">
+      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
         <div className="text-xl font-bold mb-2 text-white">Strategy Showdown</div>
         <div className="text-gray-400 text-sm flex flex-row items-center gap-x-3 mt-1">
           <Calendar className="w-4 h-4 text-white"/>
@@ -257,7 +257,7 @@ const Timeline = () => {
 
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">5</div>
-      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full">
+      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
         <div className="text-xl font-bold mb-2 text-white">Strategy Showdown</div>
         <div className="text-gray-400 text-sm flex flex-row items-center gap-x-3 mt-1">
           <Calendar className="w-4 h-4 text-white"/>
@@ -276,7 +276,7 @@ const Timeline = () => {
 
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">6</div>
-      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full">
+      <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
         <div className="text-xl font-bold mb-2 text-white">Strategy Showdown</div>
         <div className="text-gray-400 text-sm flex flex-row items-center gap-x-3 mt-1">
           <Calendar className="w-4 h-4 text-white"/>

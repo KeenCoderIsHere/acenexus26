@@ -28,7 +28,7 @@ export default function InfiniteSlider() {
               alt="slide"
               width={280}
               height={180}
-              className="rounded-xl object-cover w-full"
+              className="rounded-xl object-cover w-full hover:scale-102 cursor-pointer duration-300 ease-in-out transition-all"
             />
           </div>
         ))}

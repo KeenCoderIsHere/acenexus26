@@ -29,7 +29,7 @@ export const WhyParticipate = () => {
         </div>
 
         <div className="grid grid-cols-2 gap-8 max-w-6xl w-full">
-          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800">
+          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800 hover:border-gray-700 transition-all duration-300 ease-in-out hover:translate-y-1 cursor-pointer hover:scale-101">
             <div className="bg-[#0d1322] p-4 rounded-2xl">
               <Terminal className="w-12 h-12" color="yellow" />
             </div>
@@ -38,7 +38,7 @@ export const WhyParticipate = () => {
             </div>
           </div>
 
-          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800">
+          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800 hover:border-gray-700 transition-all duration-300 ease-in-out hover:translate-y-1 cursor-pointer hover:scale-101">
             <div className="bg-[#0d1322] p-4 rounded-2xl">
               <Compass className="w-12 h-12" color="yellow" />
             </div>
@@ -47,7 +47,7 @@ export const WhyParticipate = () => {
             </div>
           </div>
 
-          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800">
+          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800 hover:border-gray-700 transition-all duration-300 ease-in-out hover:translate-y-1 cursor-pointer hover:scale-101">
             <div className="bg-[#0d1322] p-4 rounded-2xl">
               <Users className="w-12 h-12" color="yellow" />
             </div>
@@ -56,7 +56,7 @@ export const WhyParticipate = () => {
             </div>
           </div>
 
-          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800">
+          <div className="bg-[#161b28] flex flex-row rounded-3xl p-8 items-center border border-gray-800 hover:border-gray-700 transition-all duration-300 ease-in-out hover:translate-y-1 cursor-pointer hover:scale-101">
             <div className="bg-[#0d1322] p-4 rounded-2xl">
               <Globe className="w-12 h-12" color="yellow" />
             </div>
