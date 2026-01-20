@@ -3,11 +3,15 @@ import Image from "next/image"
 import { useEffect, useRef } from 'react'
 
 const images = [
-  "/images.jpeg",
-  "/images.jpeg",
-  "/images.jpeg",
-  "/images.jpeg",
-  "/images.jpeg",
+  "/pic1.JPG",
+  "/pic2.JPG",
+  "/pic3.JPG",
+  "/pic4.JPG",
+  "/pic5.JPG",
+  "/pic6.JPG",
+  "/pic7.JPG",
+  "/pic8.JPG",
+  "/pic9.JPG"
 ]
 
 export default function InfiniteSlider() {
@@ -23,7 +27,7 @@ export default function InfiniteSlider() {
   }, [])
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="w-full overflow-hidden mt-8">
       <div
         ref={scrollerRef}
         className="flex gap-6 w-max"
@@ -32,15 +36,19 @@ export default function InfiniteSlider() {
         }}
       >
         {[...images, ...images].map((src, index) => (
-          <div key={index} className="w-[280px] flex-shrink-0">
+          <div
+            key={index}
+            className="w-[350px] h-auto flex-shrink-0 bg-black/10 rounded-xl flex items-center justify-center"
+          >
             <Image
               src={src}
               alt="slide"
               width={280}
               height={180}
-              className="rounded-xl object-cover w-full hover:scale-102 cursor-pointer duration-300 ease-in-out transition-all"
+              className="object-contain hover:scale-105 transition-transform duration-300 ease-in-out rounded-xl"
             />
           </div>
+
         ))}
       </div>
 

@@ -21,7 +21,8 @@ export default async function page({ params }){
     limit: data.limit,
     datefrom: data.datefrom?.toDate().toISOString(),
     dateto: data.dateto?.toDate().toISOString(),
-    whatToExpect: data.whatToExpect
+    whatToExpect: data.whatToExpect,
+    imageLinkName: data.imageLinkName
   }
   return (
     <>

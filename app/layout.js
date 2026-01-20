@@ -13,9 +13,8 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "ACE NEXUS'25",
-  description: "",
     icons: {
-    icon: "/favicon.svg",
+    icon: "favicon.png",
   },
 };
 

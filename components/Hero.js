@@ -8,7 +8,7 @@ export const Hero = () => {
         <div className="float">
           <a href="https://ace-sastra.vercel.app/"  target="_blank" rel="noopener noreferrer"><Image
             className="w-30 h-auto mx-auto mt-10"
-            src={"/ACE_SVG_original.svg"}
+            src={"/favicon.svg"}
             alt="photo"
             width={10}
             height={10}
@@ -37,13 +37,12 @@ export const Hero = () => {
         <div className="float">
           <a href="https://ace-sastra.vercel.app/" target="_blank" rel="noopener noreferrer"><Image
             className="w-60 h-auto mx-auto mb-8"
-            src={"/ACE_SVG_original.svg"}
+            src={"/favicon.svg"}
             alt="photo"
             width={10}
             height={10}
           /></a>
         </div>
-
         <div className="flex flex-col w-3/4 max-w-5xl items-center border-b-[1px] border-gray-700 pb-10 fade-up delay-1">
           <div className="font-medium text-2xl tracking-[0.2em]">ACE PRESENTS</div>
           <div className="font-bold text-yellow-300 text-9xl mt-2 tracking-tighter glow-text">

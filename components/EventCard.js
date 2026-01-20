@@ -4,7 +4,7 @@ import Image from "next/image"
 import { Clock } from 'lucide-react'
 import Link from 'next/link'
 
-export const EventCard = ({ event }) => {
+export const EventCard = ({ event, imageLink }) => {
   const formatEventTime = (timeStr) => {
     return new Date(timeStr).toLocaleString('en-US', {
       month: 'long',
@@ -20,7 +20,7 @@ export const EventCard = ({ event }) => {
       <div className="bg-[#161b28] border-1 border-gray-700 p-5 rounded-2xl items-center md:hidden fade-up hover-card">
         <div className="img-wrap">
           <Image
-            src={"/images.jpeg"}
+            src={`/${imageLink}`}
             width={200}
             height={200}
             alt="Image"
@@ -57,7 +57,7 @@ export const EventCard = ({ event }) => {
       <div className="hidden md:flex bg-[#161b28] border-1 border-gray-700 p-8 rounded-2xl items-center gap-8 w-full max-w-4xl mx-auto fade-up hover:translate-y-1 hover:border-gray-600 duration-300 ease-in-out transition-all">
         <div className="img-wrap w-1/3">
           <Image
-            src={"/images.jpeg"}
+            src={`/${imageLink}`}
             width={400}
             height={400}
             alt="Image"

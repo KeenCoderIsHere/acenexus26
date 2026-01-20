@@ -22,6 +22,14 @@ export default async function Home() {
       dateto: data.dateto?.toDate().toISOString()
     }
   })
+  const imageLinkNames = [
+    'iot.png',
+    'appdev.png',
+    'aiml.png',
+    'cyber.png',
+    'cp.png',
+    'webdev.png'
+  ]
   return (
     <div className="min-h-screen text-white bg-[#0b0f1a] h-full" suppressHydrationWarning>
       <Navbar />
@@ -29,13 +37,13 @@ export default async function Home() {
       <About />
       <Events />
       <div className="flex flex-col mt-10 w-[90%] mx-auto gap-y-5">
-        {
-          events.map((event, index) => {
-            return(
-              <EventCard event={event} key={index}/>
-            )
-          })
-        }
+        {events.map((event, index) => (
+          <EventCard
+            key={event.id}
+            event={event}
+            imageLink={`${imageLinkNames[index % imageLinkNames.length]}`}
+          />
+        ))}
       </div>
       <WhyParticipate />
       <Timeline />

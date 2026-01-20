@@ -36,8 +36,8 @@ export const Form = ({ event }) => {
       setShowErrorBox(true)
       return false
     }
-    if(!/^\d{5} \d{5}$/.test(phoneNumber)){
-      setError('Invalid Phone Number (Format: 98765 43210)!')
+    if(!/^\d{10}$/.test(phoneNumber)){
+      setError('Invalid Phone Number (Format: 9876543210)!')
       setShowErrorBox(true)
       return false
     }
@@ -169,17 +169,17 @@ export const Form = ({ event }) => {
   return (
     <div className="flex flex-col bg-[#0b0f1a] min-h-screen">
       <div className="flex flex-col mb-10 w-full max-w-2xl mx-auto">
-        <div className="relative w-full">
-          <Image src={"/images.jpeg"} width={800} height={400} alt="Photo" className="w-full h-auto mx-auto mt-7 object-cover rounded-xl md:rounded-b-3xl" />
-          <div className="flex flex-col bottom-4 absolute left-4 right-4">
+        <div className="w-[90%] mx-auto">
+          <Image src={`/${event.imageLinkName}`} width={800} height={400} alt="Photo" className="w-full h-auto mx-auto mt-7 object-cover rounded-xl md:rounded-b-3xl" />
+          <div className="flex flex-col bottom-4 left-4 right-4 border-slate-700 border-1 rounded-xl px-2 py-5 gap-y-3 mt-10 items-center">
             <div className="rounded-2xl bg-yellow-300 text-black font-bold text-[10px] text-center w-fit px-2 ">{event.cluster}</div>
-            <div className="text-3xl font-bold text-white break-words">{event.name}</div>
-            <div className="flex flex-wrap mt-1 gap-x-4 gap-y-1">
-              <div className="flex flex-row items-center text-white gap-x-1">
+            <div className="text-3xl font-bold text-white break-words text-center">{event.name}</div>
+            <div className="flex flex-wrap mt-1 gap-x-4 gap-y-3">
+              <div className="flex flex-row items-center text-white gap-x-1 mx-auto">
                 <Clock className="w-4 h-4" color="white" />
                 <div className="text-xs sm:text-sm">{formatEventTime(event.datefrom)}-{formatEventTime(event.dateto)}</div>
               </div>
-              <div className="flex flex-row items-center text-white gap-x-1">
+              <div className="flex flex-row items-center text-white gap-x-1 mx-auto">
                 <MapPin className="w-4 h-4" color="white" />
                 <div className="text-xs sm:text-sm">{event.venue}</div>
               </div>
@@ -218,7 +218,7 @@ export const Form = ({ event }) => {
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">PHONE NUMBER</p>
-              <input value={phoneNumber} onChange={e => setPhoneNumber(String(e.target.value))} placeholder="72597 58743" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+              <input value={phoneNumber} onChange={e => setPhoneNumber(String(e.target.value))} placeholder="7259758743" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">SASTRA EMAIL ID</p>
@@ -242,7 +242,9 @@ export const Form = ({ event }) => {
           <div className="flex flex-col p-6 border border-white/40 rounded-xl bg-black/60 backdrop-blur-sm shadow-xl max-w-xs w-full">
             <div className="text-xs text-white mb-4 text-center">{error}</div>
             <button
-              onClick={() => setShowErrorBox(false)}
+              onClick={() => {
+                setShowErrorBox(false)
+              }}
               className="mx-auto bg-yellow-300 cursor-pointer text-black font-bold text-xs py-1 px-4 rounded hover:bg-yellow-400 transition-colors"
             >
               OK
