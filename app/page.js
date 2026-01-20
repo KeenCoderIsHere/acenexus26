@@ -23,7 +23,7 @@ export default async function Home() {
     }
   })
   return (
-    <div className="min-h-screen text-white bg-[#0b0f1a] h-full">
+    <div className="min-h-screen text-white bg-[#0b0f1a] h-full" suppressHydrationWarning>
       <Navbar />
       <Hero />
       <About />

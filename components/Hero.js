@@ -6,18 +6,18 @@ export const Hero = () => {
     <>
       <div className=" md:hidden">
         <div className="float">
-          <Image
+          <a href="https://ace-sastra.vercel.app/"  target="_blank" rel="noopener noreferrer"><Image
             className="w-30 h-auto mx-auto mt-10"
             src={"/ACE_SVG_original.svg"}
             alt="photo"
             width={10}
             height={10}
-          />
+          /></a>
         </div>
 
         <div className="flex flex-col w-2/3 mx-auto items-center mt-3 border-b-[1px] border-gray-700 py-5 fade-up delay-1">
           <div className="font-medium">ACE PRESENTS</div>
-          <div className="font-bold text-yellow-300 text-5xl glow-text">NEXUS'26</div>
+          <div className="font-bold text-yellow-300 text-5xl glow-text">NEXUS'25</div>
         </div>
 
         <div className="text-gray-300 text-xl mt-2 text-center fade-up delay-2">
@@ -35,19 +35,19 @@ export const Hero = () => {
 
       <div className="hidden md:flex flex-col items-center mt-32 w-full py-10">
         <div className="float">
-          <Image
+          <a href="https://ace-sastra.vercel.app/" target="_blank" rel="noopener noreferrer"><Image
             className="w-60 h-auto mx-auto mb-8"
             src={"/ACE_SVG_original.svg"}
             alt="photo"
             width={10}
             height={10}
-          />
+          /></a>
         </div>
 
         <div className="flex flex-col w-3/4 max-w-5xl items-center border-b-[1px] border-gray-700 pb-10 fade-up delay-1">
           <div className="font-medium text-2xl tracking-[0.2em]">ACE PRESENTS</div>
           <div className="font-bold text-yellow-300 text-9xl mt-2 tracking-tighter glow-text">
-            NEXUS'26
+            NEXUS'25
           </div>
         </div>
 

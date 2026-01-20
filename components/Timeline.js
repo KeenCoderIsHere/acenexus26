@@ -178,7 +178,7 @@ const Timeline = () => {
     EVENT TIMELINE
   </div>
 
-  <div className="grid grid-cols-2 gap-x-20 gap-y-12">
+  <div className="flex flex-col gap-y-10">
     <div className="flex flex-row items-center gap-x-8">
       <div className="bg-yellow-400 rounded-full min-w-[56px] h-[56px] flex items-center justify-center text-black font-bold text-2xl">1</div>
       <div className="flex flex-col border-[1px] border-gray-400 p-6 rounded-2xl w-full  hover:translate-y-1 hover:border-gray-300 duration-300 ease-in-out hover:scale-101">
@@ -191,7 +191,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(1)}>
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer mx-auto" onClick={() => addToCalendar(1)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -210,7 +210,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(2)}>
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer mx-auto" onClick={() => addToCalendar(2)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -229,7 +229,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(3)}>
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer mx-auto" onClick={() => addToCalendar(3)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -248,7 +248,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(4)}>
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer mx-auto" onClick={() => addToCalendar(4)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -267,7 +267,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(5)}>
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer mx-auto" onClick={() => addToCalendar(5)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>
@@ -286,7 +286,7 @@ const Timeline = () => {
           <MapPin className="w-4 h-4 text-white"/>
           <div>LTC 101</div>
         </div>
-        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer" onClick={() => addToCalendar(6)}>
+        <div className="text-yellow-300 text-sm mt-4 flex flex-row items-center gap-x-2 cursor-pointer mx-auto" onClick={() => addToCalendar(6)}>
           <div>Add to Calendar</div>
           <ArrowUpRight className="text-yellow-300 w-4 h-4"/>
         </div>

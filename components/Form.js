@@ -66,7 +66,7 @@ export const Form = ({ event }) => {
       setShowErrorBox(true)
       return false
     }
-    if(!['1','2','3','4'].includes(year)){
+    if(!['1','2','3','4','5'].includes(year)){
       setError('Invalid entry for year!')
       setShowErrorBox(true)
       return false
@@ -84,6 +84,18 @@ export const Form = ({ event }) => {
     minute: '2-digit',
     hour12: true
   })
+  }
+  const checkIfAlreadyRegisteredForOtherEvent = async () => {
+    try{
+      const collectionRef = collection(db, "submissions")
+      const q = query(collectionRef, where("registerNumber", "==", `${registerNumber}`))
+      const querySnapshot = await getDocs(q)
+      return (!querySnapshot.empty)
+    }
+    catch(error){
+      setError(error.message || "An error occured!")
+      setShowErrorBox(true)
+    }
   }
   const checkIfAlreadyRegistered = async () => {
     try{
@@ -113,6 +125,12 @@ export const Form = ({ event }) => {
       const alreadyRegistered = await checkIfAlreadyRegistered()
       if(alreadyRegistered){
         setError('You have already registered for this event!')
+        setShowErrorBox(true)
+        return
+      }
+      const alreadyRegisteredForOtherEvent = await checkIfAlreadyRegisteredForOtherEvent()
+      if(alreadyRegisteredForOtherEvent){
+        setError('You are allowed to register for only one workshop!')
         setShowErrorBox(true)
         return
       }
@@ -173,20 +191,18 @@ export const Form = ({ event }) => {
         </div>
         <div className="text-sm text-gray-400 text-center w-[90%] mx-auto mt-5">{event.description}</div>
         <div className="border-slate-700 border-1 rounded-2xl text-white mt-10 w-[90%] mx-auto px-4 py-6 bg-[#0f172a]">
-          <div className="text-center text-2xl font-bold mb-5">Event Rules</div>
+          <div className="text-center text-2xl font-bold mb-5">What To Expect?</div>
           <div className="flex flex-col items-start max-w-md mx-auto gap-y-5">
-            <div className="flex flex-row items-start gap-x-3">
-              <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" color="yellow" />
-              <div className="text-xs sm:text-sm">The participants could be solo or a team of two or three.</div>
-            </div>
-            <div className="flex flex-row items-start gap-x-3">
-              <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" color="yellow" />
-              <div className="text-xs sm:text-sm">Participant must submit abstract of their paper during the resgistration process on or before 20th January 2026.</div>
-            </div>
-            <div className="flex flex-row items-start gap-x-3">
-              <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" color="yellow" />
-              <div className="text-xs sm:text-sm">Papers will be shortlisted based on the quality, relevance and originality of the abstract.</div>
-            </div>
+          {
+            event.whatToExpect?.length > 0 && event.whatToExpect.map((point,index) => {
+              return(
+                <div className="flex flex-row items-start gap-x-3" key={index}>
+                  <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5" color="yellow" />
+                  <div className="text-xs sm:text-sm">{point}</div>
+                </div>
+              )
+            })
+          }
           </div>
         </div>
         <div className="flex flex-col mt-10">

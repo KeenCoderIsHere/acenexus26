@@ -1,4 +1,5 @@
 import { MessageSquare, Linkedin, Instagram, Youtube } from 'lucide-react'
+import Link from 'next/link'
 
 export const Footer = () => {
   return (
@@ -10,7 +11,7 @@ export const Footer = () => {
           <a href='https://chat.whatsapp.com/HSN43WSqvXK8G47b0Uxad6?mode=ac_t' target='_blank' rel='noopener noreferrer'><MessageSquare className="w-5 h-5 cursor-pointer" color="#d3d3d3"/></a>
           <a href='https://youtube.com/@ace-sastra' target='_blank' rel='noopener noreferrer'><Youtube className="w-5 h-5 cursor-pointer" color="#d3d3d3"/></a>
         </div>
-        <div className="text-center mt-5 text-gray-400">© {new Date().getFullYear()} developed by <span className="text-yellow-400">ace-Webd</span></div>
+        <div className="text-center mt-5 text-gray-400"><a href='https://www.instagram.com/ace_webdev?igsh=M2Q5Y3ZqNXh4aWxx'>© {new Date().getFullYear()} developed by <span className="text-yellow-400">ace-Webd</span></a></div>
         <div className="text-center mt-2 text-gray-400 text-sm"><code>ASSOCIATION OF COMPUTING ENGINEERS</code></div>
     </div>
 
@@ -22,7 +23,7 @@ export const Footer = () => {
         <a href='https://youtube.com/@ace-sastra' target='_blank' rel='noopener noreferrer'><Youtube className="w-6 h-6 cursor-pointer hover:opacity-80 duration-300 transition-all ease-in-out hover:scale-110 hover:translate-y-[1px]" color="#d3d3d3"/></a>
       </div>
       <div className="text-center mt-8 text-gray-400 text-lg">
-        © {new Date().getFullYear()} developed by <span className="text-yellow-400">ace-Webd</span>
+        <a href='https://www.instagram.com/ace_webdev?igsh=M2Q5Y3ZqNXh4aWxx'>© {new Date().getFullYear()} developed by <span className="text-yellow-400">ace-Webd</span></a>
       </div>
       <div className="text-center mt-3 text-gray-400 text-base tracking-widest">
         <code>ASSOCIATION OF COMPUTING ENGINEERS</code>
