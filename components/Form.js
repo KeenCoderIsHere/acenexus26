@@ -817,7 +817,7 @@ export const Form = ({ event }) => {
                     <input value={registerNumber1} onChange={e => setRegisterNumber1(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
                   </div>
                   <div className="flex flex-col gap-y-2 mt-5">
-                    <p className="text-gray-400 text-xs">What do you expect in {event.name} (Optional)</p>
+                    <p className="text-gray-400 text-xs">What do you expect in {event.name}?</p>
                     <input value={expectations} onChange={e => setExpectations(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" type="text"/>
                   </div>
                   <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
@@ -881,7 +881,7 @@ export const Form = ({ event }) => {
             />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
-              <p className="text-gray-400 text-xs">What do you expect in {event.name} (Optional)</p>
+              <p className="text-gray-400 text-xs">What do you expect in {event.name}?</p>
               <input value={expectations} onChange={e => setExpectations(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" type="text"/>
             </div>
             <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
@@ -1003,7 +1003,7 @@ export const Form = ({ event }) => {
                     ) : (<></>)
                   }
                   <div className="flex flex-col gap-y-2 mt-5">
-                    <p className="text-gray-400 text-xs">What do you expect in {event.name} (Optional)</p>
+                    <p className="text-gray-400 text-xs">What do you expect in {event.name}?</p>
                     <input value={expectations} onChange={e => setExpectations(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" type="text"/>
                   </div>
                   <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
