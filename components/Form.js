@@ -7,7 +7,6 @@ import { useState } from "react"
 import { addDoc, collection, doc, getDoc, getDocs, increment, limit, query, updateDoc, where } from "firebase/firestore"
 import { db } from "@/config"
 export const Form = ({ event }) => {
-  
   const departmentOptions = [
   { value: "B.Tech. Bioengineering", label: "B.Tech. Bioengineering" },
   { value: "B.Tech. Bioinformatics", label: "B.Tech. Bioinformatics" },
