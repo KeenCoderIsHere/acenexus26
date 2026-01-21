@@ -27,7 +27,7 @@ export default async function Home() {
     'appdev.png',
     'aiml.png',
     'cyber.png',
-    'cp.png',
+    'cp.jpeg',
     'webdev.png'
   ]
   return (
