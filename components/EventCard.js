@@ -43,7 +43,7 @@ export const EventCard = ({ event, imageLink }) => {
         </div>
 
         <div className="text-gray-400 text-sm text-center mt-2 fade-up delay-3">
-          Hands-on workshop introducing the fundamentals of backend development through practical application building
+          {event.description}
         </div>
 
         <Link 

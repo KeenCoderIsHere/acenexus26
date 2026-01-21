@@ -65,7 +65,7 @@ const Timeline = () => {
 
   return (
     <>
-      <div className="flex flex-col py-5 mt-10 items-center gap-y-6 md:hidden">
+      <div className="flex flex-col py-5 mt-10 items-center gap-y-6 md:hidden" id='timeline-sm'>
         <div className="border-b-[1px] border-yellow-400 py-2 font-mono text-xl">
           EVENT TIMELINE
         </div>
@@ -105,7 +105,7 @@ const Timeline = () => {
         </div>
       </div>
 
-      <div className="hidden md:flex flex-col py-20 mt-20 items-center w-full max-w-6xl mx-auto">
+      <div className="hidden md:flex flex-col py-20 mt-20 items-center w-full max-w-6xl mx-auto" id='timeline-md'>
         <div className="border-b-[1px] border-yellow-400 text-3xl py-4 font-mono mb-16 px-8 text-white">
           EVENT TIMELINE
         </div>

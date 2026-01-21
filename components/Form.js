@@ -151,7 +151,7 @@ export const Form = ({ event }) => {
     color: "white",
     fontSize: "12px"
   })
-}
+  }
   const [name,setName] = useState('')
   const [name1,setName1] = useState('')
   const [name2,setName2] = useState('')
@@ -204,7 +204,7 @@ export const Form = ({ event }) => {
       setShowErrorBox(true)
       return false
     }
-    if(registerNumber !== email.substring(0,9)){
+    if(registerNumber !== email.split("@")[0]){
       setError('Given register number does not match email ID!')
       setShowErrorBox(true)
       return false
@@ -241,19 +241,21 @@ export const Form = ({ event }) => {
   const checkIfAlreadyRegisteredForOtherEvent = async (regNo) => {
     try{
       const collectionRef = collection(db, "submissions")
-      const q = query(collectionRef, where("registerNumber", "==", `${regNo}`))
+      const q = query(collectionRef, where("registerNumber", "array-contains", `${regNo}`))
       const querySnapshot = await getDocs(q)
-      return (!querySnapshot.empty)
+      const already = querySnapshot.docs.some((doc) => doc.data().eventId != event.id)
+      return (already)
     }
     catch(error){
       setError(error.message || "An error occured!")
       setShowErrorBox(true)
+      return false
     }
   }
   const checkIfAlreadyRegistered = async (regNo) => {
     try{
       const collectionRef = collection(db, "submissions")
-      const q = query(collectionRef, where("generatedToken", "==", `${event.id}_${regNo}`))
+      const q = query(collectionRef, where("registerNumber", "array-contains", `${regNo}`), where("eventId", "==", event.id))
       const querySnapshot = await getDocs(q)
       return (!querySnapshot.empty)
     }
@@ -289,23 +291,23 @@ export const Form = ({ event }) => {
         if(alreadyRegisteredForOtherEvent){
           setError('You are allowed to register for only one workshop!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         const docRef = await addDoc(collection(db, "submissions"), {
           name,
-          registerNumber,
+          registerNumber: [registerNumber],
           phoneNumber,
           email,
           department,
           year,
           submittedAt: new Date(),
           eventId: event.id,
-          eventName: event.name,
-          generatedToken: `${event.id}_${registerNumber}`
+          eventName: event.name
         })
-        // await updateDoc(doc(db, "events", event.id), {
-        //   limit: increment(-1)
-        // })
+        await updateDoc(doc(db, "events", event.id), {
+          limit: increment(-1)
+        })
         setName('')
         setRegisterNumber('')
         setPhoneNumber('')
@@ -316,6 +318,12 @@ export const Form = ({ event }) => {
         setError('Registration Successful!')
       }
       else if(event.type === "pair"){
+        if(event.limit < 2){
+        setLoading(false)
+        setError("Sorry! The event is now fully booked!")
+        setShowErrorBox(true)
+        return
+      }
         if(!validateCredentials()){
         setLoading(false)
         return
@@ -323,16 +331,19 @@ export const Form = ({ event }) => {
         if(!name1.trim()){
           setError('Name field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber1.trim()){
           setError('Register Number field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber1.match(/^\d{9}$/)){
           setError('Invalid Register Number!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         const alreadyRegistered = await checkIfAlreadyRegistered(registerNumber)
@@ -346,6 +357,7 @@ export const Form = ({ event }) => {
         if(alreadyRegisteredForOtherEvent){
           setError('You are allowed to register for only one workshop!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         const alreadyRegistered1 = await checkIfAlreadyRegistered(registerNumber1)
@@ -359,6 +371,13 @@ export const Form = ({ event }) => {
         if(alreadyRegisteredForOtherEvent1){
           setError(`${registerNumber1} is allowed to register for only one workshop!`)
           setShowErrorBox(true)
+          setLoading(false)
+          return
+        }
+        if(registerNumber === registerNumber1){
+          setError(`No duplicate entries allowed in same team!`)
+          setShowErrorBox(true)
+          setLoading(false)
           return
         }
         const docRef = await addDoc(collection(db, "submissions"), {
@@ -370,12 +389,11 @@ export const Form = ({ event }) => {
           year,
           submittedAt: new Date(),
           eventId: event.id,
-          eventName: event.name,
-          generatedToken: `${event.id}_${registerNumber}`
+          eventName: event.name
         })
-        // await updateDoc(doc(db, "events", event.id), {
-        //   limit: increment(-2)
-        // })
+        await updateDoc(doc(db, "events", event.id), {
+          limit: increment(-2)
+        })
         setName('')
         setRegisterNumber('')
         setPhoneNumber('')
@@ -388,6 +406,12 @@ export const Form = ({ event }) => {
         setError('Registration Successful!')
       }
       else if(event.type === 'group'){
+        if(event.limit - count < 0){
+        setLoading(false)
+        setError("Sorry! The event is now fully booked!")
+        setShowErrorBox(true)
+        return
+      }
         if(!validateCredentials()){
         setLoading(false)
         return
@@ -395,16 +419,19 @@ export const Form = ({ event }) => {
         if(!name1.trim()){
           setError('Name field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber1.trim()){
           setError('Register Number field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber1.match(/^\d{9}$/)){
           setError('Invalid Register Number!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         const alreadyRegistered = await checkIfAlreadyRegistered(registerNumber)
@@ -418,6 +445,7 @@ export const Form = ({ event }) => {
         if(alreadyRegisteredForOtherEvent){
           setError('You are allowed to register for only one workshop!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         const alreadyRegistered1 = await checkIfAlreadyRegistered(registerNumber1)
@@ -431,22 +459,26 @@ export const Form = ({ event }) => {
         if(alreadyRegisteredForOtherEvent1){
           setError(`${registerNumber1} is allowed to register for only one workshop!`)
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(count === 3){
           if(!name2.trim()){
           setError('Name field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber2.trim()){
           setError('Register Number field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber2.match(/^\d{9}$/)){
           setError('Invalid Register Number!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
           const alreadyRegistered2 = await checkIfAlreadyRegistered(registerNumber2)
@@ -460,6 +492,13 @@ export const Form = ({ event }) => {
           if(alreadyRegisteredForOtherEvent2){
             setError(`${registerNumber2} is allowed to register for only one workshop!`)
             setShowErrorBox(true)
+            setLoading(false)
+            return
+          }
+          if(registerNumber === registerNumber1 || registerNumber1 === registerNumber2 || registerNumber === registerNumber2){
+            setError(`No duplicate entries inside same team!`)
+            setShowErrorBox(true)
+            setLoading(false)
             return
           }
             const docRef = await addDoc(collection(db, "submissions"), {
@@ -471,8 +510,7 @@ export const Form = ({ event }) => {
             year,
             submittedAt: new Date(),
             eventId: event.id,
-            eventName: event.name,
-            generatedToken: `${event.id}_${registerNumber}`
+            eventName: event.name
           })
           await updateDoc(doc(db, "events", event.id), {
             limit: increment(-3)
@@ -489,37 +527,44 @@ export const Form = ({ event }) => {
           setRegisterNumber2('')
           setShowErrorBox(true)
           setError('Registration Successful!')
+          setLoading(false)
           return
         }
         else if(count === 4){
           if(!name2.trim()){
           setError('Name field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber2.trim()){
           setError('Register Number field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber2.match(/^\d{9}$/)){
           setError('Invalid Register Number!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!name3.trim()){
           setError('Name field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber3.trim()){
           setError('Register Number field is mandatory!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
         if(!registerNumber3.match(/^\d{9}$/)){
           setError('Invalid Register Number!')
           setShowErrorBox(true)
+          setLoading(false)
           return
         }
           const alreadyRegistered2 = await checkIfAlreadyRegistered(registerNumber2)
@@ -533,6 +578,7 @@ export const Form = ({ event }) => {
           if(alreadyRegisteredForOtherEvent2){
             setError(`${registerNumber2} is allowed to register for only one workshop!`)
             setShowErrorBox(true)
+            setLoading(false)
             return
           }
           const alreadyRegistered3 = await checkIfAlreadyRegistered(registerNumber3)
@@ -546,6 +592,13 @@ export const Form = ({ event }) => {
           if(alreadyRegisteredForOtherEvent3){
             setError(`${registerNumber3} is allowed to register for only one workshop!`)
             setShowErrorBox(true)
+            setLoading(false)
+            return
+          }
+          if(registerNumber === registerNumber1 || registerNumber === registerNumber2 || registerNumber === registerNumber3 || registerNumber1 === registerNumber2 || registerNumber1 === registerNumber3 || registerNumber2 === registerNumber3){
+            setError(`No duplicate entries allowed in the same team!`)
+            setShowErrorBox(true)
+            setLoading(false)
             return
           }
             const docRef = await addDoc(collection(db, "submissions"), {
@@ -557,8 +610,7 @@ export const Form = ({ event }) => {
             year,
             submittedAt: new Date(),
             eventId: event.id,
-            eventName: event.name,
-            generatedToken: `${event.id}_${registerNumber}`
+            eventName: event.name
           })
           await updateDoc(doc(db, "events", event.id), {
             limit: increment(-4)
@@ -577,9 +629,15 @@ export const Form = ({ event }) => {
           setRegisterNumber3('')
           setShowErrorBox(true)
           setError('Registration Successful!')
+          setLoading(false)
           return
         }
-        
+        if(registerNumber === registerNumber1){
+          setError(`No duplicate entries allowed in same team!`)
+          setShowErrorBox(true)
+          setLoading(false)
+          return
+        }
         const docRef = await addDoc(collection(db, "submissions"), {
           name: [name,name1],
           registerNumber: [registerNumber,registerNumber1],
@@ -589,12 +647,11 @@ export const Form = ({ event }) => {
           year,
           submittedAt: new Date(),
           eventId: event.id,
-          eventName: event.name,
-          generatedToken: `${event.id}_${registerNumber}`
+          eventName: event.name
         })
-        // await updateDoc(doc(db, "events", event.id), {
-        //   limit: increment(-2)
-        // })
+        await updateDoc(doc(db, "events", event.id), {
+          limit: increment(-2)
+        })
         setName('')
         setRegisterNumber('')
         setPhoneNumber('')
@@ -614,6 +671,16 @@ export const Form = ({ event }) => {
     finally{
       setLoading(false)
     }
+  }
+  if(!event){
+    return(
+      <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/40 backdrop-blur-md">
+          <div className="bg-[#0f172a] p-6 rounded-2xl border border-white/10 flex flex-col items-center shadow-2xl">
+            <Loader2 className="w-10 h-10 animate-spin text-yellow-300" />
+            <p className="text-white mt-4 font-semibold">Loading</p>
+          </div>
+        </div>
+    )
   }
   return (
     <div className="flex flex-col bg-[#0b0f1a] min-h-screen">
