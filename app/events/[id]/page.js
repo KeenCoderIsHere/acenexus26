@@ -23,7 +23,8 @@ export default async function page({ params }){
     dateto: data.dateto?.toDate().toISOString(),
     whatToExpect: data.whatToExpect,
     imageLinkName: data.imageLinkName,
-    type: data.type
+    type: data.type,
+    whatsappLink: data.whatsappLink
   }
   return (
     <>

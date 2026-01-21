@@ -168,6 +168,7 @@ export const Form = ({ event }) => {
   const [error,setError] = useState('')
   const [showErrorBox,setShowErrorBox] = useState(false)
   const [loading,setLoading] = useState(false)
+  const [showWhatsappLink,setShowWhatsappLink] = useState(false)
   const validateCredentials = () => {
     if(!name.trim()){
       setError('Name field is mandatory!')
@@ -308,6 +309,7 @@ export const Form = ({ event }) => {
         await updateDoc(doc(db, "events", event.id), {
           limit: increment(-1)
         })
+        setShowWhatsappLink(true)
         setName('')
         setRegisterNumber('')
         setPhoneNumber('')
@@ -315,7 +317,7 @@ export const Form = ({ event }) => {
         setDepartment('')
         setYear('')
         setShowErrorBox(true)
-        setError('Registration Successful!')
+        setError(`Registration Successful!`)
       }
       else if(event.type === "pair"){
         if(event.limit < 2){
@@ -972,6 +974,13 @@ export const Form = ({ event }) => {
         }
       </div>
       <Footer />
+      { showWhatsappLink && (
+         <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/40 backdrop-blur-md">
+          <div className="bg-[#0f172a] p-6 rounded-2xl border border-white/10 flex flex-col items-center shadow-2xl">
+            <p className="text-white mt-4 font-semibold" onClick={e => setShowWhatsappLink(false)}>Click here to join the whatsapp group : <a href={event.whatsappLink}>{event.whatsappLink}</a></p>
+          </div>
+        </div>
+      )}
       {showErrorBox && (
         <div className="fixed inset-0 flex items-center justify-center z-[110] px-4">
           <div className="flex flex-col p-6 border border-white/40 rounded-xl bg-black/60 backdrop-blur-sm shadow-xl max-w-xs w-full">
