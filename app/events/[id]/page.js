@@ -22,7 +22,8 @@ export default async function page({ params }){
     datefrom: data.datefrom?.toDate().toISOString(),
     dateto: data.dateto?.toDate().toISOString(),
     whatToExpect: data.whatToExpect,
-    imageLinkName: data.imageLinkName
+    imageLinkName: data.imageLinkName,
+    type: data.type
   }
   return (
     <>

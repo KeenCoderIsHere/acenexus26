@@ -1,4 +1,5 @@
 'use client'
+import Select from "react-select"
 import Image from "next/image"
 import { Clock, MapPin, CheckCircle, Loader2 } from "lucide-react"
 import { Footer } from "./Footer"
@@ -6,8 +7,160 @@ import { useState } from "react"
 import { addDoc, collection, doc, getDoc, getDocs, increment, limit, query, updateDoc, where } from "firebase/firestore"
 import { db } from "@/config"
 export const Form = ({ event }) => {
+  const departmentOptions = [
+  { value: "B.Tech. Bioengineering", label: "B.Tech. Bioengineering" },
+  { value: "B.Tech. Bioinformatics", label: "B.Tech. Bioinformatics" },
+  { value: "B.Tech. Biotechnology", label: "B.Tech. Biotechnology" },
+  { value: "B.Tech. Chemical Engineering", label: "B.Tech. Chemical Engineering" },
+  { value: "B.Tech. Civil Engineering", label: "B.Tech. Civil Engineering" },
+  { value: "B.Tech. Computer Science & Business Systems", label: "B.Tech. Computer Science & Business Systems" },
+  { value: "B.Tech. Computer Science & Engineering", label: "B.Tech. Computer Science & Engineering" },
+  { value: "B.Tech. Computer Science & Engineering (Artificial Intelligence & Data Science)", label: "B.Tech. Computer Science & Engineering (Artificial Intelligence & Data Science)" },
+  { value: "B.Tech. Computer Science & Engineering (Cyber Security & Block Chain Technology)", label: "B.Tech. Computer Science & Engineering (Cyber Security & Block Chain Technology)" },
+  { value: "B.Tech. Computer Science & Engineering (IoT & Automation)", label: "B.Tech. Computer Science & Engineering (IoT & Automation)" },
+  { value: "B.Tech. Computer Science & Engineering (Networks)", label: "B.Tech. Computer Science & Engineering (Networks)" },
+  { value: "B.Tech. Electrical & Electronics Engineering", label: "B.Tech. Electrical & Electronics Engineering" },
+  { value: "B.Tech. Electrical & Electronics Engineering (Smart Grid and Electric Vehicles)", label: "B.Tech. Electrical & Electronics Engineering (Smart Grid and Electric Vehicles)" },
+  { value: "B.Tech. Electronics & Communication Engineering", label: "B.Tech. Electronics & Communication Engineering" },
+  { value: "B.Tech. Electronics & Communication Engineering (Cyber Physical Systems)", label: "B.Tech. Electronics & Communication Engineering (Cyber Physical Systems)" },
+  { value: "B.Tech. Electronics & Computer Engineering", label: "B.Tech. Electronics & Computer Engineering" },
+  { value: "B.Tech. Electronics & Instrumentation Engineering", label: "B.Tech. Electronics & Instrumentation Engineering" },
+  { value: "B.Tech. Electronics Engineering (VLSI Design & Technology)", label: "B.Tech. Electronics Engineering (VLSI Design & Technology)" },
+  { value: "B.Tech. Information & Communication Technology", label: "B.Tech. Information & Communication Technology" },
+  { value: "B.Tech. Information Technology", label: "B.Tech. Information Technology" },
+  { value: "B.Tech. Mechanical Engineering", label: "B.Tech. Mechanical Engineering" },
+  { value: "B.Tech. Mechanical Engineering (Digital Manufacturing)", label: "B.Tech. Mechanical Engineering (Digital Manufacturing)" },
+  { value: "B.Tech. Mechatronics", label: "B.Tech. Mechatronics" },
+  { value: "B.Tech. Aerospace Engineering", label: "B.Tech. Aerospace Engineering" },
+  { value: "B.Tech. Robotics & Artificial Intelligence", label: "B.Tech. Robotics & Artificial Intelligence" },
+  { value: "B.Optometry", label: "B.Optometry" },
+  { value: "B.Sc. (Hons.) Agriculture", label: "B.Sc. (Hons.) Agriculture" },
+  { value: "B.Sc. Visual Communication with minor in Journalism", label: "B.Sc. Visual Communication with minor in Journalism" },
+  { value: "B.Sc. Visual Communication with minor in Electronic Media", label: "B.Sc. Visual Communication with minor in Electronic Media" },
+  { value: "B.Sc. Biochemistry", label: "B.Sc. Biochemistry" },
+  { value: "B.Sc. Biochemistry-DMLT", label: "B.Sc. Biochemistry-DMLT" },
+  { value: "B.Sc. Computer Science", label: "B.Sc. Computer Science" },
+  { value: "B.Sc. Electronics and Communication System", label: "B.Sc. Electronics and Communication System" },
+  { value: "B.Sc. Mathematics with Computer Applications", label: "B.Sc. Mathematics with Computer Applications" },
+  { value: "B.Sc. Microbiology", label: "B.Sc. Microbiology" },
+  { value: "B.Sc. Microbiology-DMLT", label: "B.Sc. Microbiology-DMLT" },
+  { value: "B.Sc. Physics", label: "B.Sc. Physics" },
+  { value: "B.A. Economics & Public Policy", label: "B.A. Economics & Public Policy" },
+  { value: "B.A. LL.B. (Hons.)", label: "B.A. LL.B. (Hons.)" },
+  { value: "B.B.A. LL.B. (Hons.)", label: "B.B.A. LL.B. (Hons.)" },
+  { value: "B.Com. LL.B. (Hons.)", label: "B.Com. LL.B. (Hons.)" },
+  { value: "B.Com. with minor in Business Process", label: "B.Com. with minor in Business Process" },
+  { value: "B.Com. with minor in Financial Markets", label: "B.Com. with minor in Financial Markets" },
+  { value: "B.Com. with minor in Corporate Finance & Strategy", label: "B.Com. with minor in Corporate Finance & Strategy" },
+  { value: "B.Com. with minor in Economics & Public Policy", label: "B.Com. with minor in Economics & Public Policy" },
+  { value: "BBA (Bachelor of Business Administration)", label: "BBA (Bachelor of Business Administration)" },
+  { value: "BCA (Bachelor of Computer Applications)", label: "BCA (Bachelor of Computer Applications)" },
+  { value: "B.Ed. (Bachelor of Education)", label: "B.Ed. (Bachelor of Education)" },
+  { value: "BFA in Music", label: "BFA in Music" },
+  { value: "BFA in Bharatanatyam", label: "BFA in Bharatanatyam" },
+  { value: "M.Tech. Integrated Biotechnology (5-year)", label: "M.Tech. Integrated Biotechnology (5-year)" },
+  { value: "M.Tech. Integrated Medical Nanotechnology (5-year)", label: "M.Tech. Integrated Medical Nanotechnology (5-year)" },
+  { value: "M.Tech. Integrated Advanced Manufacturing (5-year)", label: "M.Tech. Integrated Advanced Manufacturing (5-year)" },
+  { value: "M.Tech. Integrated Automobile Engineering (5-year)", label: "M.Tech. Integrated Automobile Engineering (5-year)" },
+  { value: "M.Sc. Integrated Biotechnology", label: "M.Sc. Integrated Biotechnology" },
+  { value: "M.Sc. Integrated Physics", label: "M.Sc. Integrated Physics" },
+  { value: "M.Sc. Integrated Chemistry", label: "M.Sc. Integrated Chemistry" },
+  { value: "M.Sc. Integrated Mathematics", label: "M.Sc. Integrated Mathematics" },
+  { value: "M.Sc. Integrated Mathematics and Computing", label: "M.Sc. Integrated Mathematics and Computing" },
+  { value: "M.Sc. Integrated Data Science", label: "M.Sc. Integrated Data Science" },
+  { value: "B.Ed. Integrated", label: "B.Ed. Integrated" },
+  { value: "M.Tech. Aerospace Engineering", label: "M.Tech. Aerospace Engineering" },
+  { value: "M.Tech. Digital Manufacturing", label: "M.Tech. Digital Manufacturing" },
+  { value: "M.Tech. Artificial Intelligence and Data Science", label: "M.Tech. Artificial Intelligence and Data Science" },
+  { value: "M.Tech. Computer Science & Engineering", label: "M.Tech. Computer Science & Engineering" },
+  { value: "M.Tech. Cyber Security", label: "M.Tech. Cyber Security" },
+  { value: "M.Tech. VLSI Design", label: "M.Tech. VLSI Design" },
+  { value: "M.Tech. Artificial Intelligence & Robotics", label: "M.Tech. Artificial Intelligence & Robotics" },
+  { value: "M.Tech. Power & Energy Systems", label: "M.Tech. Power & Energy Systems" },
+  { value: "M.Tech. Wireless Smart Communications", label: "M.Tech. Wireless Smart Communications" },
+  { value: "M.Tech. Big Data Biology", label: "M.Tech. Big Data Biology" },
+  { value: "M.Tech. Industrial Biotechnology", label: "M.Tech. Industrial Biotechnology" },
+  { value: "M.Tech. Medical Nanotechnology", label: "M.Tech. Medical Nanotechnology" },
+  { value: "M.Tech. Structural Engineering", label: "M.Tech. Structural Engineering" },
+  { value: "M.Tech. Construction Engineering & Management", label: "M.Tech. Construction Engineering & Management" },
+  { value: "M.Tech. Environmental Engineering", label: "M.Tech. Environmental Engineering" },
+  { value: "M.Tech. Embedded Systems", label: "M.Tech. Embedded Systems" },
+  { value: "M.Tech. Power Electronics & Drives", label: "M.Tech. Power Electronics & Drives" },
+  { value: "M.Tech. Communication Systems", label: "M.Tech. Communication Systems" },
+  { value: "M.Tech. Thermal Engineering", label: "M.Tech. Thermal Engineering" },
+  { value: "M.Optometry", label: "M.Optometry" },
+  { value: "MCA (Master of Computer Applications)", label: "MCA (Master of Computer Applications)" },
+  { value: "MBA with minor in Strategy", label: "MBA with minor in Strategy" },
+  { value: "MBA with minor in Data Sciences", label: "MBA with minor in Data Sciences" },
+  { value: "MBA with minor in Marketing", label: "MBA with minor in Marketing" },
+  { value: "MBA with minor in Supply Chain Management (SCM)", label: "MBA with minor in Supply Chain Management (SCM)" },
+  { value: "M.Sc. in Physics", label: "M.Sc. in Physics" },
+  { value: "M.Sc. in Chemistry", label: "M.Sc. in Chemistry" },
+  { value: "M.Sc. in Mathematics", label: "M.Sc. in Mathematics" },
+  { value: "M.Sc. in Data Science", label: "M.Sc. in Data Science" },
+  { value: "M.Sc. Biochemistry", label: "M.Sc. Biochemistry" },
+  { value: "M.Sc. Computer Science", label: "M.Sc. Computer Science" },
+  { value: "M.Sc. Microbiology", label: "M.Sc. Microbiology" },
+  { value: "M.A. in Sanskrit", label: "M.A. in Sanskrit" },
+  { value: "M.A. in English", label: "M.A. in English" },
+  { value: "M.A. Divyaprabhandam", label: "M.A. Divyaprabhandam" },
+  { value: "M.A. Sanskrit (5-Year Integrated)", label: "M.A. Sanskrit (5-Year Integrated)" },
+  { value: "M.Com.", label: "M.Com." },
+  { value: "M.Ed. (Master of Education)", label: "M.Ed. (Master of Education)" },
+  { value: "MFA in Bharatanatyam", label: "MFA in Bharatanatyam" },
+  { value: "LL.M. with specialization in International Law", label: "LL.M. with specialization in International Law" },
+  { value: "LL.M. with specialization in Taxation", label: "LL.M. with specialization in Taxation" },
+  { value: "Ph.D. in Biotechnology", label: "Ph.D. in Biotechnology" },
+  { value: "Ph.D. in Chemical Engineering", label: "Ph.D. in Chemical Engineering" },
+  { value: "Ph.D. in Civil Engineering (specializations in Structural, Geotechnical, Transportation, etc.)", label: "Ph.D. in Civil Engineering (specializations in Structural, Geotechnical, Transportation, etc.)" },
+  { value: "Ph.D. in Computer Science & Engineering", label: "Ph.D. in Computer Science & Engineering" },
+  { value: "Ph.D. in Information Technology", label: "Ph.D. in Information Technology" },
+  { value: "Ph.D. in Electrical & Electronics Engineering", label: "Ph.D. in Electrical & Electronics Engineering" },
+  { value: "Ph.D. in Electronics & Communication Engineering", label: "Ph.D. in Electronics & Communication Engineering" },
+  { value: "Ph.D. in Management Studies", label: "Ph.D. in Management Studies" },
+  { value: "Ph.D. in Mechanical Engineering", label: "Ph.D. in Mechanical Engineering" },
+  { value: "Ph.D. in Aerospace Engineering", label: "Ph.D. in Aerospace Engineering" },
+  { value: "Ph.D. in Law", label: "Ph.D. in Law" },
+  { value: "Ph.D. in Arts, Sciences, Humanities, and Education fields (e.g., Mathematics, Physics, English)", label: "Ph.D. in Arts, Sciences, Humanities, and Education fields (e.g., Mathematics, Physics, English)" }
+]
+  const selectStyles = {
+  control: (base) => ({
+    ...base,
+    backgroundColor: "#0f172a",
+    borderColor: "#334155",
+    boxShadow: "none",
+    minHeight: "38px"
+  }),
+  menu: (base) => ({
+    ...base,
+    backgroundColor: "#0f172a"
+  }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isFocused ? "#1e293b" : "#0f172a",
+    color: "white",
+    fontSize: "12px"
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: "white",
+    fontSize: "12px"
+  }),
+  input: (base) => ({
+    ...base,
+    color: "white",
+    fontSize: "12px"
+  })
+}
   const [name,setName] = useState('')
+  const [name1,setName1] = useState('')
+  const [name2,setName2] = useState('')
+  const [name3,setName3] = useState('')
+  const [registerNumber2,setRegisterNumber2] = useState('')
+  const [registerNumber3,setRegisterNumber3] = useState('')
+  const [count,setCount] = useState(0)
   const [registerNumber,setRegisterNumber] = useState('')
+  const [registerNumber1,setRegisterNumber1] = useState('')
   const [phoneNumber,setPhoneNumber] = useState('')
   const [email,setEmail] = useState('')
   const [department,setDepartment] = useState('')
@@ -85,10 +238,10 @@ export const Form = ({ event }) => {
     hour12: true
   })
   }
-  const checkIfAlreadyRegisteredForOtherEvent = async () => {
+  const checkIfAlreadyRegisteredForOtherEvent = async (regNo) => {
     try{
       const collectionRef = collection(db, "submissions")
-      const q = query(collectionRef, where("registerNumber", "==", `${registerNumber}`))
+      const q = query(collectionRef, where("registerNumber", "==", `${regNo}`))
       const querySnapshot = await getDocs(q)
       return (!querySnapshot.empty)
     }
@@ -97,10 +250,10 @@ export const Form = ({ event }) => {
       setShowErrorBox(true)
     }
   }
-  const checkIfAlreadyRegistered = async () => {
+  const checkIfAlreadyRegistered = async (regNo) => {
     try{
       const collectionRef = collection(db, "submissions")
-      const q = query(collectionRef, where("generatedToken", "==", `${event.id}_${registerNumber}`))
+      const q = query(collectionRef, where("generatedToken", "==", `${event.id}_${regNo}`))
       const querySnapshot = await getDocs(q)
       return (!querySnapshot.empty)
     }
@@ -114,49 +267,345 @@ export const Form = ({ event }) => {
     try{
       e.preventDefault()
       if(event.limit <= 0){
+        setLoading(false)
         setError("Sorry! The event is now fully booked!")
         setShowErrorBox(true)
         return
       }
       setLoading(true)
-      if(!validateCredentials()){
-        return
-      }
-      const alreadyRegistered = await checkIfAlreadyRegistered()
-      if(alreadyRegistered){
-        setError('You have already registered for this event!')
+      if(event.type === "individual"){
+          if(!validateCredentials()){
+          setLoading(false)
+          return
+        }
+        const alreadyRegistered = await checkIfAlreadyRegistered(registerNumber)
+        if(alreadyRegistered){
+          setLoading(false)
+          setError('You have already registered for this event!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegisteredForOtherEvent = await checkIfAlreadyRegisteredForOtherEvent(registerNumber)
+        if(alreadyRegisteredForOtherEvent){
+          setError('You are allowed to register for only one workshop!')
+          setShowErrorBox(true)
+          return
+        }
+        const docRef = await addDoc(collection(db, "submissions"), {
+          name,
+          registerNumber,
+          phoneNumber,
+          email,
+          department,
+          year,
+          submittedAt: new Date(),
+          eventId: event.id,
+          eventName: event.name,
+          generatedToken: `${event.id}_${registerNumber}`
+        })
+        // await updateDoc(doc(db, "events", event.id), {
+        //   limit: increment(-1)
+        // })
+        setName('')
+        setRegisterNumber('')
+        setPhoneNumber('')
+        setEmail('')
+        setDepartment('')
+        setYear('')
         setShowErrorBox(true)
-        return
+        setError('Registration Successful!')
       }
-      const alreadyRegisteredForOtherEvent = await checkIfAlreadyRegisteredForOtherEvent()
-      if(alreadyRegisteredForOtherEvent){
-        setError('You are allowed to register for only one workshop!')
+      else if(event.type === "pair"){
+        if(!validateCredentials()){
+        setLoading(false)
+        return
+        }
+        if(!name1.trim()){
+          setError('Name field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber1.trim()){
+          setError('Register Number field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber1.match(/^\d{9}$/)){
+          setError('Invalid Register Number!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegistered = await checkIfAlreadyRegistered(registerNumber)
+        if(alreadyRegistered){
+          setLoading(false)
+          setError('You have already registered for this event!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegisteredForOtherEvent = await checkIfAlreadyRegisteredForOtherEvent(registerNumber)
+        if(alreadyRegisteredForOtherEvent){
+          setError('You are allowed to register for only one workshop!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegistered1 = await checkIfAlreadyRegistered(registerNumber1)
+        if(alreadyRegistered1){
+          setLoading(false)
+          setError(`${registerNumber1} has already registered for this event!`)
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegisteredForOtherEvent1 = await checkIfAlreadyRegisteredForOtherEvent(registerNumber1)
+        if(alreadyRegisteredForOtherEvent1){
+          setError(`${registerNumber1} is allowed to register for only one workshop!`)
+          setShowErrorBox(true)
+          return
+        }
+        const docRef = await addDoc(collection(db, "submissions"), {
+          name: [name,name1],
+          registerNumber: [registerNumber,registerNumber1],
+          phoneNumber,
+          email,
+          department,
+          year,
+          submittedAt: new Date(),
+          eventId: event.id,
+          eventName: event.name,
+          generatedToken: `${event.id}_${registerNumber}`
+        })
+        // await updateDoc(doc(db, "events", event.id), {
+        //   limit: increment(-2)
+        // })
+        setName('')
+        setRegisterNumber('')
+        setPhoneNumber('')
+        setEmail('')
+        setDepartment('')
+        setYear('')
+        setName1('')
+        setRegisterNumber1('')
         setShowErrorBox(true)
-        return
+        setError('Registration Successful!')
       }
-      const docRef = await addDoc(collection(db, "submissions"), {
-        name,
-        registerNumber,
-        phoneNumber,
-        email,
-        department,
-        year,
-        submittedAt: new Date(),
-        eventId: event.id,
-        eventName: event.name,
-        generatedToken: `${event.id}_${registerNumber}`
-      })
-      await updateDoc(doc(db, "events", event.id), {
-        limit: increment(-1)
-      })
-      setName('')
-      setRegisterNumber('')
-      setPhoneNumber('')
-      setEmail('')
-      setDepartment('')
-      setYear('')
-      setShowErrorBox(true)
-      setError('Registration Successful!')
+      else if(event.type === 'group'){
+        if(!validateCredentials()){
+        setLoading(false)
+        return
+        }
+        if(!name1.trim()){
+          setError('Name field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber1.trim()){
+          setError('Register Number field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber1.match(/^\d{9}$/)){
+          setError('Invalid Register Number!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegistered = await checkIfAlreadyRegistered(registerNumber)
+        if(alreadyRegistered){
+          setLoading(false)
+          setError('You have already registered for this event!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegisteredForOtherEvent = await checkIfAlreadyRegisteredForOtherEvent(registerNumber)
+        if(alreadyRegisteredForOtherEvent){
+          setError('You are allowed to register for only one workshop!')
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegistered1 = await checkIfAlreadyRegistered(registerNumber1)
+        if(alreadyRegistered1){
+          setLoading(false)
+          setError(`${registerNumber1} has already registered for this event!`)
+          setShowErrorBox(true)
+          return
+        }
+        const alreadyRegisteredForOtherEvent1 = await checkIfAlreadyRegisteredForOtherEvent(registerNumber1)
+        if(alreadyRegisteredForOtherEvent1){
+          setError(`${registerNumber1} is allowed to register for only one workshop!`)
+          setShowErrorBox(true)
+          return
+        }
+        if(count === 3){
+          if(!name2.trim()){
+          setError('Name field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber2.trim()){
+          setError('Register Number field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber2.match(/^\d{9}$/)){
+          setError('Invalid Register Number!')
+          setShowErrorBox(true)
+          return
+        }
+          const alreadyRegistered2 = await checkIfAlreadyRegistered(registerNumber2)
+          if(alreadyRegistered2){
+            setLoading(false)
+            setError(`${registerNumber2} has already registered for this event!`)
+            setShowErrorBox(true)
+            return
+          }
+          const alreadyRegisteredForOtherEvent2 = await checkIfAlreadyRegisteredForOtherEvent(registerNumber2)
+          if(alreadyRegisteredForOtherEvent2){
+            setError(`${registerNumber2} is allowed to register for only one workshop!`)
+            setShowErrorBox(true)
+            return
+          }
+            const docRef = await addDoc(collection(db, "submissions"), {
+            name: [name,name1,name2],
+            registerNumber: [registerNumber,registerNumber1,registerNumber2],
+            phoneNumber,
+            email,
+            department,
+            year,
+            submittedAt: new Date(),
+            eventId: event.id,
+            eventName: event.name,
+            generatedToken: `${event.id}_${registerNumber}`
+          })
+          await updateDoc(doc(db, "events", event.id), {
+            limit: increment(-3)
+          })
+          setName('')
+          setRegisterNumber('')
+          setPhoneNumber('')
+          setEmail('')
+          setDepartment('')
+          setYear('')
+          setName1('')
+          setRegisterNumber1('')
+          setName2('')
+          setRegisterNumber2('')
+          setShowErrorBox(true)
+          setError('Registration Successful!')
+          return
+        }
+        else if(count === 4){
+          if(!name2.trim()){
+          setError('Name field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber2.trim()){
+          setError('Register Number field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber2.match(/^\d{9}$/)){
+          setError('Invalid Register Number!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!name3.trim()){
+          setError('Name field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber3.trim()){
+          setError('Register Number field is mandatory!')
+          setShowErrorBox(true)
+          return
+        }
+        if(!registerNumber3.match(/^\d{9}$/)){
+          setError('Invalid Register Number!')
+          setShowErrorBox(true)
+          return
+        }
+          const alreadyRegistered2 = await checkIfAlreadyRegistered(registerNumber2)
+          if(alreadyRegistered2){
+            setLoading(false)
+            setError(`${registerNumber2} has already registered for this event!`)
+            setShowErrorBox(true)
+            return
+          }
+          const alreadyRegisteredForOtherEvent2 = await checkIfAlreadyRegisteredForOtherEvent(registerNumber2)
+          if(alreadyRegisteredForOtherEvent2){
+            setError(`${registerNumber2} is allowed to register for only one workshop!`)
+            setShowErrorBox(true)
+            return
+          }
+          const alreadyRegistered3 = await checkIfAlreadyRegistered(registerNumber3)
+          if(alreadyRegistered3){
+            setLoading(false)
+            setError(`${registerNumber3} has already registered for this event!`)
+            setShowErrorBox(true)
+            return
+          }
+          const alreadyRegisteredForOtherEvent3 = await checkIfAlreadyRegisteredForOtherEvent(registerNumber3)
+          if(alreadyRegisteredForOtherEvent3){
+            setError(`${registerNumber3} is allowed to register for only one workshop!`)
+            setShowErrorBox(true)
+            return
+          }
+            const docRef = await addDoc(collection(db, "submissions"), {
+            name: [name,name1,name2,name3],
+            registerNumber: [registerNumber,registerNumber1,registerNumber2,registerNumber3],
+            phoneNumber,
+            email,
+            department,
+            year,
+            submittedAt: new Date(),
+            eventId: event.id,
+            eventName: event.name,
+            generatedToken: `${event.id}_${registerNumber}`
+          })
+          await updateDoc(doc(db, "events", event.id), {
+            limit: increment(-4)
+          })
+          setName('')
+          setRegisterNumber('')
+          setPhoneNumber('')
+          setEmail('')
+          setDepartment('')
+          setYear('')
+          setName1('')
+          setRegisterNumber1('')
+          setName2('')
+          setRegisterNumber2('')
+          setName3('')
+          setRegisterNumber3('')
+          setShowErrorBox(true)
+          setError('Registration Successful!')
+          return
+        }
+        
+        const docRef = await addDoc(collection(db, "submissions"), {
+          name: [name,name1],
+          registerNumber: [registerNumber,registerNumber1],
+          phoneNumber,
+          email,
+          department,
+          year,
+          submittedAt: new Date(),
+          eventId: event.id,
+          eventName: event.name,
+          generatedToken: `${event.id}_${registerNumber}`
+        })
+        // await updateDoc(doc(db, "events", event.id), {
+        //   limit: increment(-2)
+        // })
+        setName('')
+        setRegisterNumber('')
+        setPhoneNumber('')
+        setEmail('')
+        setDepartment('')
+        setYear('')
+        setName1('')
+        setRegisterNumber1('')
+        setShowErrorBox(true)
+        setError('Registration Successful!')
+      }
     }
     catch(error){
       setError(error.message || "An error occured!")
@@ -172,7 +621,7 @@ export const Form = ({ event }) => {
         <div className="w-[90%] mx-auto">
           <Image src={`/${event.imageLinkName}`} width={800} height={400} alt="Photo" className="w-full h-auto mx-auto mt-7 object-cover rounded-xl md:rounded-b-3xl" />
           <div className="flex flex-col bottom-4 left-4 right-4 border-slate-700 border-1 rounded-xl px-2 py-5 gap-y-3 mt-10 items-center">
-            <div className="rounded-2xl bg-yellow-300 text-black font-bold text-[10px] text-center w-fit px-2 ">{event.cluster}</div>
+            <div className="rounded-2xl bg-yellow-300 text-black font-bold text-[20px] text-center w-fit px-2 ">{event.cluster}</div>
             <div className="text-3xl font-bold text-white break-words text-center">{event.name}</div>
             <div className="flex flex-wrap mt-1 gap-x-4 gap-y-3">
               <div className="flex flex-row items-center text-white gap-x-1 mx-auto">
@@ -205,36 +654,255 @@ export const Form = ({ event }) => {
           }
           </div>
         </div>
-        <div className="flex flex-col mt-10">
+        {
+          event?.type === "pair" ? (
+                <div className="flex flex-col mt-10">
+                <div className="text-white text-2xl border-b-[1px] py-2 font-semibold border-yellow-400 w-fit text-center mx-auto">Register Now</div>
+                <form onSubmit={handleSubmit} className="flex flex-col w-[90%] sm:w-[80%] mx-auto mt-5">
+                  <div className="flex flex-col gap-y-2">
+                    <p className="text-gray-400 text-xs">FULL NAME</p>
+                    <input value={name} onChange={e => { setName(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">REG. NO</p>
+                    <input value={registerNumber} onChange={e => setRegisterNumber(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">PHONE NUMBER</p>
+                    <input value={phoneNumber} onChange={e => setPhoneNumber(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">SASTRA EMAIL ID</p>
+                    <input value={email} onChange={e => setEmail(e.target.value)} placeholder="" type="email" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">DEPARTMENT</p>
+
+                    <Select
+                      options={departmentOptions}
+                      styles={selectStyles}
+                      placeholder="Search or select department"
+                      isSearchable
+                      value={
+                        department
+                          ? departmentOptions.find(opt => opt.value === department)
+                          : null
+                      }
+                      onChange={(selected) => setDepartment(selected ? selected.value : "")}
+                      className="text-xs"
+                      classNamePrefix="react-select"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">YEAR</p>
+                    <Select
+                    options={[
+                      { value: "1", label: "1st Year" },
+                      { value: "2", label: "2nd Year" },
+                      { value: "3", label: "3rd Year" },
+                      { value: "4", label: "4th Year" },
+                      { value: "5", label: "5th Year" }
+                    ]}
+                    styles={selectStyles}
+                    placeholder="Select year"
+                    value={year ? { value: year, label: `${year} Year` } : null}
+                    onChange={(selected) => setYear(selected ? selected.value : "")}
+                    className="text-xs"
+                  />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">FULL NAME (MEMBER 2)</p>
+                    <input value={name1} onChange={e => { setName1(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">REG. NO (MEMBER 2)</p>
+                    <input value={registerNumber1} onChange={e => setRegisterNumber1(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
+                </form>
+              </div>
+          )
+          :
+          event.type === "individual" ? (
+            <div className="flex flex-col mt-10">
           <div className="text-white text-2xl border-b-[1px] py-2 font-semibold border-yellow-400 w-fit text-center mx-auto">Register Now</div>
           <form onSubmit={handleSubmit} className="flex flex-col w-[90%] sm:w-[80%] mx-auto mt-5">
             <div className="flex flex-col gap-y-2">
               <p className="text-gray-400 text-xs">FULL NAME</p>
-              <input value={name} onChange={e => { setName(e.target.value) }} placeholder="John Doe" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+              <input value={name} onChange={e => { setName(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">REG. NO</p>
-              <input value={registerNumber} onChange={e => setRegisterNumber(String(e.target.value))} placeholder="124003191" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+              <input value={registerNumber} onChange={e => setRegisterNumber(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">PHONE NUMBER</p>
-              <input value={phoneNumber} onChange={e => setPhoneNumber(String(e.target.value))} placeholder="7259758743" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+              <input value={phoneNumber} onChange={e => setPhoneNumber(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">SASTRA EMAIL ID</p>
-              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="124003191@sastra.ac.in" type="email" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+              <input value={email} onChange={e => setEmail(e.target.value)} placeholder="" type="email" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">DEPARTMENT</p>
-              <input value={department} onChange={e => setDepartment(e.target.value)} placeholder="CSE" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+
+              <Select
+                options={departmentOptions}
+                styles={selectStyles}
+                placeholder="Search or select department"
+                isSearchable
+                value={
+                  department
+                    ? departmentOptions.find(opt => opt.value === department)
+                    : null
+                }
+                onChange={(selected) => setDepartment(selected ? selected.value : "")}
+                className="text-xs"
+                classNamePrefix="react-select"
+              />
             </div>
             <div className="flex flex-col gap-y-2 mt-5">
               <p className="text-gray-400 text-xs">YEAR</p>
-              <input value={year} onChange={e => setYear(String(e.target.value))} placeholder="3" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+              <Select
+              options={[
+                { value: "1", label: "1st Year" },
+                { value: "2", label: "2nd Year" },
+                { value: "3", label: "3rd Year" },
+                { value: "4", label: "4th Year" },
+                { value: "5", label: "5th Year" }
+              ]}
+              styles={selectStyles}
+              placeholder="Select year"
+              value={year ? { value: year, label: `${year} Year` } : null}
+              onChange={(selected) => setYear(selected ? selected.value : "")}
+              className="text-xs"
+            />
             </div>
             <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
           </form>
         </div>
+          )
+          :
+          event.type === "group" ? (
+            <div className="flex flex-col mt-10">
+                <div className="text-white text-2xl border-b-[1px] py-2 font-semibold border-yellow-400 w-fit text-center mx-auto">Register Now</div>
+                <form onSubmit={handleSubmit} className="flex flex-col w-[90%] sm:w-[80%] mx-auto mt-5">
+                  <div className="flex flex-col gap-y-2 mt-5 mb-5">
+                  <p className="text-gray-400 text-xs">NUMBER OF GROUP MEMBERS</p>
+                  <Select
+                  options={[
+                    { value: 2, label: "2" },
+                    { value: 3, label: "3" },
+                    { value: 4, label: "4" }
+                  ]}
+                  styles={selectStyles}
+                  placeholder="Select number of group members"
+                  value={count ? { value: count, label: `${count}` } : null}
+                  onChange={(selected) => setCount(selected ? Number(selected.value) : 2)}
+                  className="text-xs"
+                />
+                  </div>
+                  <div className="flex flex-col gap-y-2">
+                    <p className="text-gray-400 text-xs">FULL NAME</p>
+                    <input value={name} onChange={e => { setName(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">REG. NO</p>
+                    <input value={registerNumber} onChange={e => setRegisterNumber(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">PHONE NUMBER</p>
+                    <input value={phoneNumber} onChange={e => setPhoneNumber(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">SASTRA EMAIL ID</p>
+                    <input value={email} onChange={e => setEmail(e.target.value)} placeholder="" type="email" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">DEPARTMENT</p>
+
+                    <Select
+                      options={departmentOptions}
+                      styles={selectStyles}
+                      placeholder="Search or select department"
+                      isSearchable
+                      value={
+                        department
+                          ? departmentOptions.find(opt => opt.value === department)
+                          : null
+                      }
+                      onChange={(selected) => setDepartment(selected ? selected.value : "")}
+                      className="text-xs"
+                      classNamePrefix="react-select"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">YEAR</p>
+                    <Select
+                    options={[
+                      { value: "1", label: "1st Year" },
+                      { value: "2", label: "2nd Year" },
+                      { value: "3", label: "3rd Year" },
+                      { value: "4", label: "4th Year" },
+                      { value: "5", label: "5th Year" }
+                    ]}
+                    styles={selectStyles}
+                    placeholder="Select year"
+                    value={year ? { value: year, label: `${year} Year` } : null}
+                    onChange={(selected) => setYear(selected ? selected.value : "")}
+                    className="text-xs"
+                  />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">FULL NAME (MEMBER 2)</p>
+                    <input value={name1} onChange={e => { setName1(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">REG. NO (MEMBER 2)</p>
+                    <input value={registerNumber1} onChange={e => setRegisterNumber1(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  {
+                    count === 3 ? (
+                      <>
+                          <div className="flex flex-col gap-y-2 mt-5">
+                            <p className="text-gray-400 text-xs">FULL NAME (MEMBER 3)</p>
+                            <input value={name2} onChange={e => { setName2(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                          </div>
+                          <div className="flex flex-col gap-y-2 mt-5">
+                            <p className="text-gray-400 text-xs">REG. NO (MEMBER 3)</p>
+                            <input value={registerNumber2} onChange={e => setRegisterNumber2(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                          </div>
+                      </>
+                    ) 
+                    : 
+                    count === 4 ? (
+                      <>
+                          <div className="flex flex-col gap-y-2 mt-5">
+                            <p className="text-gray-400 text-xs">FULL NAME (MEMBER 3)</p>
+                            <input value={name2} onChange={e => { setName2(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                          </div>
+                          <div className="flex flex-col gap-y-2 mt-5">
+                            <p className="text-gray-400 text-xs">REG. NO (MEMBER 3)</p>
+                            <input value={registerNumber2} onChange={e => setRegisterNumber2(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                          </div>
+                          <div className="flex flex-col gap-y-2 mt-5">
+                            <p className="text-gray-400 text-xs">FULL NAME (MEMBER 4)</p>
+                            <input value={name3} onChange={e => { setName3(e.target.value) }} placeholder="" type="text" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                          </div>
+                          <div className="flex flex-col gap-y-2 mt-5">
+                            <p className="text-gray-400 text-xs">REG. NO (MEMBER 4)</p>
+                            <input value={registerNumber3} onChange={e => setRegisterNumber3(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                          </div>
+                      </>
+                    ) : (<></>)
+                  }
+                  <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
+                </form>
+              </div>
+          )
+          :
+          (<></>)
+        }
       </div>
       <Footer />
       {showErrorBox && (

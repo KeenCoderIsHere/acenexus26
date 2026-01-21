@@ -1,4 +1,5 @@
 'use client'
+import Image from "next/image"
 import { Link } from "react-scroll"
 
 export const Navbar = () => {
@@ -7,7 +8,7 @@ export const Navbar = () => {
      <div className="bg-[#0b0f1a] md:hidden flex flex-col w-full border-b-[1px] border-gray-700">
   <div className="flex flex-row py-5 px-6 justify-center items-center w-full">
     <div className="text-xl font-bold text-yellow-400 font-mono tracking-tighter">
-      <a href="/">NEXUS'25</a>
+      <a href="/"><Image src={"/nexus.png"} alt="photo" width={200} height={200}/></a>
     </div>
   </div>
 
@@ -32,7 +33,8 @@ export const Navbar = () => {
     </div>
 
     <div className="hidden md:flex flex-row py-8 px-12 justify-between items-center w-full border-b-[1px] border-gray-700 bg-[#0b0f1a]">
-  <div className="text-3xl font-bold text-yellow-400 font-mono tracking-tighter"><a href="/">NEXUS'25</a></div>
+  <div className="text-3xl font-bold text-yellow-400 font-mono tracking-tighter">
+      <a href="/"><Image src={"/nexus.png"} alt="photo" width={240} height={240}/></a></div>
   
   <div className="flex flex-row gap-x-10 text-gray-300 font-mono text-sm uppercase tracking-widest">
     <div className="cursor-pointer hover:text-yellow-400 transition-colors"><Link to="events-md" smooth={true} duration={500}>Events</Link></div>
