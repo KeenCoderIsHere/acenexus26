@@ -7,6 +7,7 @@ import { useState } from "react"
 import { addDoc, collection, doc, getDoc, getDocs, increment, limit, query, updateDoc, where } from "firebase/firestore"
 import { db } from "@/config"
 export const Form = ({ event }) => {
+  
   const departmentOptions = [
   { value: "B.Tech. Bioengineering", label: "B.Tech. Bioengineering" },
   { value: "B.Tech. Bioinformatics", label: "B.Tech. Bioinformatics" },
@@ -974,20 +975,19 @@ export const Form = ({ event }) => {
         }
       </div>
       <Footer />
-      { showWhatsappLink && (
-         <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/40 backdrop-blur-md">
-          <div className="bg-[#0f172a] p-6 rounded-2xl border border-white/10 flex flex-col items-center shadow-2xl">
-            <p className="text-white mt-4 font-semibold" onClick={e => setShowWhatsappLink(false)}>Click here to join the whatsapp group : <a href={event.whatsappLink}>{event.whatsappLink}</a></p>
-          </div>
-        </div>
-      )}
       {showErrorBox && (
         <div className="fixed inset-0 flex items-center justify-center z-[110] px-4">
           <div className="flex flex-col p-6 border border-white/40 rounded-xl bg-black/60 backdrop-blur-sm shadow-xl max-w-xs w-full">
             <div className="text-xs text-white mb-4 text-center">{error}</div>
+            {
+              showWhatsappLink && event.whatsappLink && (
+                <p className="mb-3 mx-auto text-center text-white text-xs">Join the whatsapp group: <a href={event.whatsappLink} target="_blank" rel="noopener noreferer" className="break-all text-blue-500 underline cursor-pointer">{event.whatsappLink}</a></p>
+              )
+            }
             <button
               onClick={() => {
                 setShowErrorBox(false)
+                setShowWhatsappLink(false)
               }}
               className="mx-auto bg-yellow-300 cursor-pointer text-black font-bold text-xs py-1 px-4 rounded hover:bg-yellow-400 transition-colors"
             >
