@@ -108,20 +108,6 @@ export const Form = ({ event }) => {
   { value: "M.Com.", label: "M.Com." },
   { value: "M.Ed. (Master of Education)", label: "M.Ed. (Master of Education)" },
   { value: "MFA in Bharatanatyam", label: "MFA in Bharatanatyam" },
-  { value: "LL.M. with specialization in International Law", label: "LL.M. with specialization in International Law" },
-  { value: "LL.M. with specialization in Taxation", label: "LL.M. with specialization in Taxation" },
-  { value: "Ph.D. in Biotechnology", label: "Ph.D. in Biotechnology" },
-  { value: "Ph.D. in Chemical Engineering", label: "Ph.D. in Chemical Engineering" },
-  { value: "Ph.D. in Civil Engineering (specializations in Structural, Geotechnical, Transportation, etc.)", label: "Ph.D. in Civil Engineering (specializations in Structural, Geotechnical, Transportation, etc.)" },
-  { value: "Ph.D. in Computer Science & Engineering", label: "Ph.D. in Computer Science & Engineering" },
-  { value: "Ph.D. in Information Technology", label: "Ph.D. in Information Technology" },
-  { value: "Ph.D. in Electrical & Electronics Engineering", label: "Ph.D. in Electrical & Electronics Engineering" },
-  { value: "Ph.D. in Electronics & Communication Engineering", label: "Ph.D. in Electronics & Communication Engineering" },
-  { value: "Ph.D. in Management Studies", label: "Ph.D. in Management Studies" },
-  { value: "Ph.D. in Mechanical Engineering", label: "Ph.D. in Mechanical Engineering" },
-  { value: "Ph.D. in Aerospace Engineering", label: "Ph.D. in Aerospace Engineering" },
-  { value: "Ph.D. in Law", label: "Ph.D. in Law" },
-  { value: "Ph.D. in Arts, Sciences, Humanities, and Education fields (e.g., Mathematics, Physics, English)", label: "Ph.D. in Arts, Sciences, Humanities, and Education fields (e.g., Mathematics, Physics, English)" }
 ]
   const selectStyles = {
   control: (base) => ({
@@ -156,6 +142,7 @@ export const Form = ({ event }) => {
   const [name1,setName1] = useState('')
   const [name2,setName2] = useState('')
   const [name3,setName3] = useState('')
+  const [expectations,setExpectations] = useState('')
   const [registerNumber2,setRegisterNumber2] = useState('')
   const [registerNumber3,setRegisterNumber3] = useState('')
   const [count,setCount] = useState(0)
@@ -309,6 +296,12 @@ export const Form = ({ event }) => {
         await updateDoc(doc(db, "events", event.id), {
           limit: increment(-1)
         })
+        if(expectations.trim()){
+          const expectationRef = await addDoc(collection(db, "expectations"), {
+            registerNumber,
+            expectations
+          })
+        }
         setShowWhatsappLink(true)
         setName('')
         setRegisterNumber('')
@@ -318,6 +311,7 @@ export const Form = ({ event }) => {
         setYear('')
         setShowErrorBox(true)
         setError(`Registration Successful!`)
+        setExpectations('')
       }
       else if(event.type === "pair"){
         if(event.limit < 2){
@@ -396,6 +390,13 @@ export const Form = ({ event }) => {
         await updateDoc(doc(db, "events", event.id), {
           limit: increment(-2)
         })
+        if(expectations.trim()){
+          const expectationRef = await addDoc(collection(db, "expectations"), {
+            registerNumber,
+            expectations
+          })
+        }
+        setShowWhatsappLink(true)
         setName('')
         setRegisterNumber('')
         setPhoneNumber('')
@@ -406,6 +407,7 @@ export const Form = ({ event }) => {
         setRegisterNumber1('')
         setShowErrorBox(true)
         setError('Registration Successful!')
+        setExpectations('')
       }
       else if(event.type === 'group'){
         if(event.limit - count < 0){
@@ -517,6 +519,13 @@ export const Form = ({ event }) => {
           await updateDoc(doc(db, "events", event.id), {
             limit: increment(-3)
           })
+          if(expectations.trim()){
+            const expectationsRef = await addDoc(collection(db, "expectations"), {
+              registerNumber,
+              expectations
+            })
+          }
+          setShowWhatsappLink(true)
           setName('')
           setRegisterNumber('')
           setPhoneNumber('')
@@ -529,7 +538,9 @@ export const Form = ({ event }) => {
           setRegisterNumber2('')
           setShowErrorBox(true)
           setError('Registration Successful!')
+          setExpectations('')
           setLoading(false)
+          setCount(0)
           return
         }
         else if(count === 4){
@@ -617,6 +628,13 @@ export const Form = ({ event }) => {
           await updateDoc(doc(db, "events", event.id), {
             limit: increment(-4)
           })
+          if(expectations.trim()){
+            const expectationsRef = await addDoc(collection(db, "expectations"), {
+              registerNumber,
+              expectations
+            })
+          }
+          setShowWhatsappLink(true)
           setName('')
           setRegisterNumber('')
           setPhoneNumber('')
@@ -631,7 +649,9 @@ export const Form = ({ event }) => {
           setRegisterNumber3('')
           setShowErrorBox(true)
           setError('Registration Successful!')
+          setExpectations('')
           setLoading(false)
+          setCount(0)
           return
         }
         if(registerNumber === registerNumber1){
@@ -654,6 +674,13 @@ export const Form = ({ event }) => {
         await updateDoc(doc(db, "events", event.id), {
           limit: increment(-2)
         })
+        if(expectations.trim()){
+            const expectationsRef = await addDoc(collection(db, "expectations"), {
+              registerNumber,
+              expectations
+            })
+        }
+        setShowWhatsappLink(true)
         setName('')
         setRegisterNumber('')
         setPhoneNumber('')
@@ -664,6 +691,8 @@ export const Form = ({ event }) => {
         setRegisterNumber1('')
         setShowErrorBox(true)
         setError('Registration Successful!')
+        setExpectations('')
+        setCount(0)
       }
     }
     catch(error){
@@ -774,7 +803,7 @@ export const Form = ({ event }) => {
                     ]}
                     styles={selectStyles}
                     placeholder="Select year"
-                    value={year ? { value: year, label: `${year} Year` } : null}
+                    value={year ? { value: year, label: `${year}` } : null}
                     onChange={(selected) => setYear(selected ? selected.value : "")}
                     className="text-xs"
                   />
@@ -786,6 +815,10 @@ export const Form = ({ event }) => {
                   <div className="flex flex-col gap-y-2 mt-5">
                     <p className="text-gray-400 text-xs">REG. NO (MEMBER 2)</p>
                     <input value={registerNumber1} onChange={e => setRegisterNumber1(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" />
+                  </div>
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">What do you expect in {event.name} (Optional)</p>
+                    <input value={expectations} onChange={e => setExpectations(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" type="text"/>
                   </div>
                   <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
                 </form>
@@ -842,10 +875,14 @@ export const Form = ({ event }) => {
               ]}
               styles={selectStyles}
               placeholder="Select year"
-              value={year ? { value: year, label: `${year} Year` } : null}
+              value={year ? { value: year, label: `${year}` } : null}
               onChange={(selected) => setYear(selected ? selected.value : "")}
               className="text-xs"
             />
+            </div>
+            <div className="flex flex-col gap-y-2 mt-5">
+              <p className="text-gray-400 text-xs">What do you expect in {event.name} (Optional)</p>
+              <input value={expectations} onChange={e => setExpectations(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" type="text"/>
             </div>
             <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
           </form>
@@ -917,7 +954,7 @@ export const Form = ({ event }) => {
                     ]}
                     styles={selectStyles}
                     placeholder="Select year"
-                    value={year ? { value: year, label: `${year} Year` } : null}
+                    value={year ? { value: year, label: `${year}` } : null}
                     onChange={(selected) => setYear(selected ? selected.value : "")}
                     className="text-xs"
                   />
@@ -965,6 +1002,10 @@ export const Form = ({ event }) => {
                       </>
                     ) : (<></>)
                   }
+                  <div className="flex flex-col gap-y-2 mt-5">
+                    <p className="text-gray-400 text-xs">What do you expect in {event.name} (Optional)</p>
+                    <input value={expectations} onChange={e => setExpectations(String(e.target.value))} placeholder="" className="focus:outline-none px-3 py-2 bg-[#0f172a] rounded-xl border-1 border-slate-700 placeholder:text-gray-500 text-xs text-white" type="text"/>
+                  </div>
                   <button disabled={loading} type="submit" className="hover:bg-yellow-200 transition-all duration-300 ease-in-out cursor-pointer bg-yellow-300 rounded-lg text-black text-xs px-6 py-2 w-full sm:w-[60%] mx-auto mt-10 text-center font-bold">{loading ? "Sending..." : "Register Now"}</button>
                 </form>
               </div>
