@@ -47,10 +47,10 @@ export const EventCard = ({ event, imageLink }) => {
         </div>
 
         <Link 
-          href={`/events/${event.id}`} 
+          href={`/`} 
           className="block bg-[#1e293b] rounded-xl w-full mt-4 font-semibold py-3 text-center cursor-pointer fade-up delay-4"
         >
-          Explore Event
+          Registrations Closed!
         </Link>
       </div>
 
@@ -83,7 +83,7 @@ export const EventCard = ({ event, imageLink }) => {
           <div className="text-gray-400 text-base mt-4 fade-up delay-3">
             {event.description}
           </div>
-            <Link href={`/events/${event.id}`} className='bg-[#1e293b] rounded-xl w-fit px-10 mt-6 font-semibold py-3 text-center cursor-pointer fade-up delay-4'>Explore Event</Link>
+            <Link href={`/`} className='bg-[#1e293b] rounded-xl w-fit px-10 mt-6 font-semibold py-3 text-center cursor-pointer fade-up delay-4'>Registrations Closed!</Link>
         </div>
       </div>
 
